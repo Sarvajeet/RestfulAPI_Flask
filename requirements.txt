@@ -1,0 +1,6 @@
+flask
+flask_restful
+flask_swagger_ui
+mcp
+httpx
+uvicorn
