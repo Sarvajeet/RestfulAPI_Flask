@@ -1,4 +1,4 @@
 Traceback (most recent call last):
-  File "/app/RestApi.py", line 9, in <module>
-    from flask_restful import Api, Resource
-ModuleNotFoundError: No module named 'flask_restful'
+  File "/app/RestApi.py", line 29, in <module>
+    mcp.run(transport="streamable-http", uvicorn_options={"host": "127.0.0.1", "port": 5003})
+TypeError: FastMCP.run() got an unexpected keyword argument 'uvicorn_options'
