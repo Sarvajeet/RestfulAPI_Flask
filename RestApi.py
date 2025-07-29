@@ -7,9 +7,25 @@ Created on Sun Jun  2 16:19:59 2019
 
 from flask import Flask
 from flask_restful import Api, Resource
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 api = Api(app)
+
+### Swagger UI setup ###
+SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
+
+# Call factory function to create our blueprint
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "User API"
+    }
+)
+
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 # User data stored in a dictionary for efficient O(1) lookups by name.
 # Previously, this was a list, requiring O(n) iteration.
