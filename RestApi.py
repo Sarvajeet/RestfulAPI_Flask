@@ -5,28 +5,31 @@ Created on Sun Jun  2 16:19:59 2019
 @author: Sarva
 """
 
-from mcp.server.fastmcp import FastMCP
+from flask import Flask
+from flask_restful import Api, Resource
 
-# Create an MCP server
-mcp = FastMCP("Demo", stateless_http=True)
+app = Flask(__name__)
+api = Api(app)
 
+# User data stored in a dictionary for efficient O(1) lookups by name.
+# Previously, this was a list, requiring O(n) iteration.
 users_dict = {
     "Nicholas": {"age": 42, "occupation": "Network Engineer"},
     "Elvin": {"age": 32, "occupation": "Doctor"},
     "Jass": {"age": 22, "occupation": "Web Developer"}
 }
 
-# Add a dynamic greeting resource
-@mcp.resource("user://{name}")
-def get_user(name: str) -> str:
-    """Get a personalized greeting"""
-    if name in users_dict:
-        user_data = users_dict[name]
-        return f"Name: {name}, Age: {user_data['age']}, Occupation: {user_data['occupation']}"
-    return "User not found"
+class User(Resource):
 
-import uvicorn
+    def get(self,name):
+        # Direct dictionary access for user lookup (O(1) average time complexity).
+        if name in users_dict:
+            user_data = users_dict[name]
+            # Reconstruct the response to include the name, matching original behavior
+            return {"name": name, "age": user_data["age"], "occupation": user_data["occupation"]}, 200
+        return "User not found", 404
 
-if __name__ == "__main__":
-    app = mcp.streamable_http_app()
-    uvicorn.run(app, host="127.0.0.1", port=5003)
+
+api.add_resource(User, "/user/<string:name>")
+# Run the Flask app. Debug mode is set to False for production readiness (security/performance).
+app.run(port='5003',debug=False)
