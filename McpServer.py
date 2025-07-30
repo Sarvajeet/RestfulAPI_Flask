@@ -4,7 +4,7 @@ import httpx
 # Create an MCP server
 mcp = FastMCP("Demo", stateless_http=True)
 
-from mcp.model import Resource, Tool
+from mcp.types import Resource, Tool
 
 @mcp.resource("user://{name}", title="Get User")
 async def get_user(name: str) -> dict:
@@ -15,7 +15,6 @@ async def get_user(name: str) -> dict:
             return response.json()
         return {"error": "User not found"}
 
-@mcp.list_resources()
 async def list_resources() -> list[Resource]:
     """List available resources."""
     return [
@@ -32,19 +31,9 @@ async def list_resources() -> list[Resource]:
             title="Jass",
         ),
     ]
-
-@mcp.list_tools()
-async def list_tools() -> list[Tool]:
-    """List available tools."""
-    return [
-        Tool(
-            name="get_user",
-            title="Get User",
-            description="Get user information",
-        )
-    ]
+mcp.list_resources(list_resources)
+mcp.list_tools(list_tools)
 
 if __name__ == "__main__":
     import uvicorn
-    print(dir(mcp))
     uvicorn.run("McpServer:mcp.streamable_http_app()", host="127.0.0.1", port=8080, reload=True)

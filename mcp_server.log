@@ -1,4 +1,8 @@
+/app/McpServer.py:18: RuntimeWarning: coroutine 'FastMCP.list_resources' was never awaited
+  @mcp.list_resources()
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 Traceback (most recent call last):
-  File "/app/McpServer.py", line 7, in <module>
-    from mcp.server.fastmcp import Resource, Tool
-ImportError: cannot import name 'Resource' from 'mcp.server.fastmcp' (/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/mcp/server/fastmcp/__init__.py). Did you mean: 'resources'?
+  File "/app/McpServer.py", line 18, in <module>
+    @mcp.list_resources()
+     ^^^^^^^^^^^^^^^^^^^^
+TypeError: 'coroutine' object is not callable
