@@ -31,6 +31,16 @@ async def list_resources() -> list[Resource]:
             title="Jass",
         ),
     ]
+
+async def list_tools() -> list[Tool]:
+    """List available tools."""
+    return [
+        Tool(
+            name="get_user",
+            title="Get User",
+            description="Get user information",
+        )
+    ]
 mcp.list_resources(list_resources)
 mcp.list_tools(list_tools)
 
