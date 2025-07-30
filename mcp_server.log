@@ -1,5 +1,4 @@
-INFO:     Started server process [11362]
-INFO:     Waiting for application startup.
-StreamableHTTP session manager started
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+Traceback (most recent call last):
+  File "/app/McpServer.py", line 7, in <module>
+    from mcp.server.fastmcp import Resource, Tool
+ImportError: cannot import name 'Resource' from 'mcp.server.fastmcp' (/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/mcp/server/fastmcp/__init__.py). Did you mean: 'resources'?
